@@ -43,6 +43,7 @@
 				<td class="tdFormLabel"></td>
 				<td class="tdFormControl"><s:submit type="submit" cssClass="btn" value="登录" /></td>
 			</tr>
+			<tr></tr>
 		</table>
 		</s:form>
 	</body>
