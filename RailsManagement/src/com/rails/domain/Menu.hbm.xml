@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.rails.domain.Menu" table="menu">
+		<id name="id" column="id" type="int">
+		<!-- 一般会使用class="native" 会自动选择匹配 -->
+			<generator class="identity" />
+		</id>
+		<property name="text" column="text" type="string" length="30" />
+		<property name="url" column="url" type="string" length="50" />
+		<property name="pid" column="pid" type="int" length="15" />
+	</class>
+</hibernate-mapping>

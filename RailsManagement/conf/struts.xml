@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+
+	<!-- 主题 -->
+	<!-- <constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.devMode" value="false" /> -->
+	<constant name="struts.i18n.encoding" value="utf-8"></constant>	
+	<!--当使用jfreechart的时候一定得加上，不然找不到result type为chart的 ，可以多重继承  -->
+	<package name="railsPkg" extends="struts-default,jfreechart-default" namespace="/">
+		<!-- 注册拦截器 -->
+		<interceptors>
+			<!-- <interceptor name="LoginInterceptor" class="com.rails.struts.interceptor.LoginInterceptor" /> 
+			涵盖了登录拦截
+			<interceptor name="RightFilterInterceptor" class="com.rails.struts.interceptor.RightFilterInterceptor" />
+			<interceptor name="CatchUrlInterceptor" class="com.rails.struts.interceptor.CatchUrlInterceptor" >
+				是否开启该拦截器的的开关，默认是开启
+				<param name="enable">false</param>
+			</interceptor>-->
+			<!-- 自定义拦截器栈(也就是将自己定义的拦截器和默认拦截器加起来) -->
+			<interceptor-stack name="railsStack">
+				<!-- 捕获拦截器只是在开发过程中用到，开发完成后可以去掉了，要确保所有的url都捕获到
+				<interceptor-ref name="CatchUrlInterceptor" />
+				<interceptor-ref name="LoginInterceptor" />
+				
+				<interceptor-ref name="RightFilterInterceptor" /> -->
+				<!-- 参数预备参数栈(和modelDriven + prepable是黄金组合) -->
+				<interceptor-ref name="paramsPrepareParamsStack" />
+			</interceptor-stack>
+		</interceptors>
+		<!-- 定义默认栈为自定义的栈 -->
+		<default-interceptor-ref name="railsStack"></default-interceptor-ref> 
+		<!-- 定义全局结果，用于拦截后的跳转 -->
+		<global-results>
+			<result name="MenuManageAction" type="redirectAction">
+				<param name="actionName">MenuAction_listMenu</param>
+				<param name="namespace">/</param>
+			</result>
+		</global-results> 
+	
+		
+		<action name="RegAction_*" class="regAction" method="{1}">
+			<result name="regView">/reg.jsp</result>
+			<result name="success">/regSuccess.jsp</result>
+			<result name="input">/reg.jsp</result>
+			
+		</action>
+		
+		<!-- ajax验证action -->
+		<action name="save" class="ajaxAction"/>
+		
+		
+		<!-- 登录LoginAction -->
+		<action name="LoginAction_*" class="loginAction" method="{1}">
+			<result name="success">/loginSuccess.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<!-- MenuAction -->
+		<action name="MenuAction_*" class="menuAction" method="{1}">
+			<result name="toMainPage">/main.jsp</result>
+			<result name="toManagePage">/manageMenu.jsp</result>
+			<result name="editMenuPage">/editMenu.jsp</result>
+			<result name="AddMenuPage">/addMenu.jsp</result>
+			<result name="fail">/fail.jsp</result>
+		</action>
+		
+		<!-- 新建调查SurveyAction -->
+		<!-- 
+		<action name="SurveyAction_*" class="surveyAction" method="{1}">
+			<result name="designSurvey" >/designSurvey.jsp</result>
+			<result name="mySurveyListPage">/mySurveyList.jsp</result>
+			<result name="editSurveyPage">/editSurvey.jsp</result>
+			<result name="addLogoPage">/addLogo.jsp</result>
+			<result name="analyzeSurveyListPage">/analyzeSurveyList.jsp</result>
+			
+			当出现错误时返回的结果是"input",动态指定input的跳转
+			<result name="input">${inputPage}</result>
+			<result name="input">/addLogo.jsp</result>
+			
+			<result name="editSurveyPage">/test1.jsp</result>
+			<result name="mySurveyListPage">/test.jsp</result>
+			指定上传文件参数
+			<interceptor-ref name="railsStack">
+				大小  70K ,当超过2M时需要配置<constant name="struts.multipart.maxSize" value="9000000"/>
+					将value值改成比你配置的大就行了
+				
+				fileUpload.maximumSize表示该拦截器栈中的fileUpload拦截器中的maximumSize属性（可以查看fileUpload拦截器的源码） 
+				<param name="fileUpload.maximumSize">70000</param>
+				<param name="fileUpload.allowedExtensions">.jpeg,.jpeg,.png,.bmp,.gif</param>
+				<param name="fileUpload.allowedTypes">image/jpeg,image/jpg,image/pjpeg,image/bmp,image/gif,image/png</param>
+				使用Action相关的配置文件,默认是false
+				<param name="fileUpload.useActionMessageBundle">true</param>
+			</interceptor-ref>
+			
+			
+		</action> -->
+		
+		<!--
+		ChartOutputeActionByPlugin 
+		 在package中需要加上extends="struts-default,jfreechart-default"
+		-->
+		<!-- <action name="ChartOutputActionByPlugin" class="chartOutputActionByPlugin" >
+			<result name="success" type="chart">
+				<param name="width">400</param>
+				<param name="height">300</param>
+			</result>
+		</action> -->
+		
+		
+		
+		
+		<!--RightAction  -->
+		<action name="RightAction_*" class="rightAction" method="{1}">
+			<result name="rightListPage">/rightList.jsp</result>
+			<result name="editRightPage">/editRight.jsp</result>
+			
+			<result name="findAllRightsAction" type="redirectAction">
+				<param name="actionName">RightAction_findAllRights</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+		
+		<!--RoleAction  -->
+		<action name="RoleAction_*" class="roleAction" method="{1}">
+			<result name="roleListPage">/roleList.jsp</result>
+			<result name="editRolePage">/editRole.jsp</result>
+			
+			<result name="findAllRolesAction" type="redirectAction">
+				<param name="actionName">RoleAction_findAllRoles</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+		<!--UserAuthorizeAction  -->
+		<action name="UserAuthorizeAction_*" class="userAuthorizeAction" method="{1}">
+			<result name="userAuthorizeListPage">/userAuthorizeList.jsp</result>
+			<result name="editAuthorizePage">/userAuthorize.jsp</result>
+			<result name="inputSuccess">/loginSuccess.jsp</result>
+			
+			
+			<result name="findAllUsersAction" type="redirectAction">
+				<param name="actionName">UserAuthorizeAction_findAllUsers</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+		
+		
+	</package>	
+</struts>	

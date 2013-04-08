@@ -1,0 +1,22 @@
+.menu li a#Summarize{
+	color:#28A7E1; font-weight:bold
+}
+.menu li a#Summarize.Summarize font{
+	background:url(../images/Survey_hover.gif) no-repeat 10px center
+}
+
+/*.menu ol#ParticipateInol,.menu ol#SetUpol,.menu ol#Channelol,.menu ol#Userol,.menu ol#CustomEventol{
+	display:block
+}*/
+.menu li a#Channel span,.menu li a#SetUp span,.menu li a#User span,.menu li a#ParticipateIn span,.menu li a#CustomEvent span{
+	background:url(../images/more_icon_hoverb.gif) no-repeat right center
+}
+.menu li a:hover#Channel span,.menu li a:hover#SetUp span,.menu li a:hover#User span,.menu li a:hover#ParticipateIn span,.menu li a:hover#CustomEvent span{
+	background:url(../images/more_icon_hover.gif) no-repeat right center
+}
+.menu li a#Channelclose span,.menu li a#SetUpclose span,.menu li a#Userclose span,.menu li a#ParticipateInclose span,.menu li a#CustomEventclose span{
+	background:url(../images/more_icon.gif) no-repeat right center
+}
+
+
+
