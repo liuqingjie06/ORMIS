@@ -69,6 +69,8 @@ function login() {
 }
 
 function callback(data) {
+	//@TODO login.jsp通过ajax向doLogin action发送数据，并在这里返回一个数据。1 0 -1
+	
 	loadHide();
 	input('lemail','emailmessage');
 	//input('lpassword','passwordmessage');
@@ -86,7 +88,7 @@ function callback(data) {
    }
 				   
 	if(data == "1") {
-		window.location.href = basePath + "LoginAction_doLogin.action";
+		window.location.href = basePath + "loginSuccess.jsp";
 	}else if(data == "0"){
 		window.location.href = basePath + "LoginAction_doLogin.action";
 	}else if(data=="-1"){
