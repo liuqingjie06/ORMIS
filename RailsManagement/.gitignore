@@ -1,0 +1,5 @@
+/build/* 
+/.setting/*
+/conf/jdbc.properites
+/.classpath
+/.project
