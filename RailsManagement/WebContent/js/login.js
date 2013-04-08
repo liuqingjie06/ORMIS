@@ -4,7 +4,7 @@ function init() {
 	check("lemail", "emailmessage");
 	check("lpassword", "passwordmessage");
 	
-	document.getElementById("lemail").value="";
+   document.getElementById("lemail").value="";
    document.getElementById("lpassword").value="";
    document.getElementById("talkdatacheckbox").checked=true;
 	   
@@ -55,13 +55,13 @@ function login() {
 
 	if(vpassword != null && vpassword != "") {
 		hide("lpwddiv");
-		var url = basePath + "servlet/UserLoginServlet";
+		var url = basePath + "LoginAction_doLogin.action";
 		var params = {
 			email : vemail,
 			password : vpassword,
 			timcc : vtimecc
 		};
-		$.get(url, params, callback);
+		$.post(url, params, callback);
 	} else {
 		loadHide();
 		setDivInfo("lpwddiv", "请填写密码", 1);
@@ -86,11 +86,11 @@ function callback(data) {
    }
 				   
 	if(data == "1") {
-		window.location.href = basePath + "webpage/productlist.jsp";
+		window.location.href = basePath + "LoginAction_doLogin.action";
 	}else if(data == "0"){
-		window.location.href = basePath + "page/CreatProduct.jsp";
+		window.location.href = basePath + "LoginAction_doLogin.action";
 	}else if(data=="-1"){
-		window.location.href = basePath + "unactivatemail.jsp";
+		window.location.href = basePath + "LoginAction_doLogin.action";
 	}else {
 		setDivInfo("lemaildiv", data, 1);
 	}

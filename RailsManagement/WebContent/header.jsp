@@ -14,9 +14,7 @@
 		<script type="text/javascript" src="../js/util.js"></script>
 		<script type="text/javascript" src="../js/summarizejs/summarize.js"></script>
 		<script src="../js/Tab.js"></script>
-		<script type="text/javascript" src="../js/login.js"></script>
-		<script type="text/javascript" src="../js/input.js"></script>
-			<script type="text/javascript" src="../js/land.js"></script>
+
 		
 		<link href="../css/WdatePicker.css" type="text/css"/>
 		<style type="text/css">
@@ -25,7 +23,8 @@
 		
 		<link rel="shortcut icon" href="images/Talkingdata.ico" type="image/x-icon" />
 		<link href="../css/css.css" rel="stylesheet" type="text/css" />
-		<script type="text/javascript"> var basePath="http://analytics.talkingdata.net:80/"; </script>
+		<!-- 重要：basePath为系统的根目录 -->
+		<script type="text/javascript"> var basePath="/RailsManagement/"; </script>
 		<script type="text/javascript"> var username="Demo"; </script>
 		<script type="text/javascript" language="javascript" src="../js/check.js"></script>
 		<script type="text/javascript" src="../js/jquery.min.js"></script>
@@ -35,14 +34,15 @@
 		<script src="../js/Data_Ruler.js"></script>
 		<script type="text/javascript" src="../js/highslide/highslide-full.min.js"></script>
 		<script type="text/javascript" src="../js/highslide/highslide.config.js" charset="utf-8"></script>
-		
-		<link rel="stylesheet" type="text/css" href="../css/landcss.css" />
 		<link rel="stylesheet" type="text/css" href="../css/highslide.css" />
 		<script type="text/javascript">
 			$(document).ready(function(){
 			$("select").sSelect();
 			})
 		</script>
+		<script type="text/javascript" src="../js/login.js"></script>
+		<script type="text/javascript" src="../js/input.js"></script>
+		<script type="text/javascript" src="../js/land.js"></script>
 		<script>
 		var productid,platformid;
 		var milestonedate,mileevent,mileremarks;

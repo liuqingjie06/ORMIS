@@ -1,30 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
-<s:include value="../header.jsp"></s:include>
-<script>
+<s:include value="../loginheader.jsp"></s:include>
+<!--script>
 		mainheight();
-	</script>
+	</script-->
 <div class="web">
 <div class="minweb" style="min-height: 362px;">	
 <script type="text/javascript" src="../js/index.js"></script>
-<script>
-		mainheight();
-</script>	
 <div class="main">
 	<div class="title">
 		<img src="../images/land.jpg" alt="用户登录" width="143" height="21">
 	</div>
 	<div class="txt">
 	<div class="land" style="position:static">
-		<s:if test="#session['user'] != null">
+	  <s:if test="#session['user'] != null">
 			<!--div class="divNavigatorOuterFrame">
 				<div class="divNavigatorInnerFrame" style="text-align: right;">
 					欢迎<s:property value="#session['user'].nickName" />&nbsp;&nbsp;
 				</div>
 			</div-->
-		<div class="divWhiteLine"></div>
-		</s:if>
-		<s:form action="LoginAction_doLogin" namespace="/" method="post">
+	     <!-- div class="divWhiteLine"></div-->
+	  </s:if>
+	  <s:form  action="LoginAction_doLogin" namespace="/" method="post">
 		<ul>
 			 <li class="relative">
        	    <input id="lemail" class="inputtxthover" type="text" value="" onfocus="hide('emailmessage');" onblur="fun1();"/>
@@ -46,9 +43,7 @@
               <span class="l"><input id="talkdatacheckbox" type="checkbox" style="margin:-1px 10px 0 2px;" /><strong>记住密码</strong>
               </span>
         </span>
-		
-
-		</s:form>
+	</s:form>
 </div>
 </div>
 </div>
