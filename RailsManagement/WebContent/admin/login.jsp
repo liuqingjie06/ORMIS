@@ -5,7 +5,11 @@
 		mainheight();
 	</script>
 <div class="web">
-<div class="minweb" style="min-height: 362px;">		
+<div class="minweb" style="min-height: 362px;">	
+<script type="text/javascript" src="../js/index.js"></script>
+<script>
+		mainheight();
+</script>	
 <div class="main">
 	<div class="title">
 		<img src="../images/land.jpg" alt="用户登录" width="143" height="21">

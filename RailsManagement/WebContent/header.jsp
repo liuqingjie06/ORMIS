@@ -15,6 +15,7 @@
 		<script type="text/javascript" src="../js/summarizejs/summarize.js"></script>
 		<script src="../js/Tab.js"></script>
 		<script type="text/javascript" src="../js/login.js"></script>
+		<script type="text/javascript" src="../js/input.js"></script>
 			<script type="text/javascript" src="../js/land.js"></script>
 		
 		<link href="../css/WdatePicker.css" type="text/css"/>
