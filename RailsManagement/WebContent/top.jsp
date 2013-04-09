@@ -10,22 +10,13 @@
         </div>
         <div class="nav l" style="padding-left:40px">
            	<font> 铁路工务信息管理系统</font>
-        </div>   
-           
+        </div>              
 		<div class="nav r" style="padding-right:10px">
-           
-              <!-- 此处为用户名 -->
-                username   <font>|</font>
-                <a href="#">
-                        退出
-                </a>
-    
-              </font>
-         </div>
-	</div>
-       
+             <font>|</font>
+                <a href="#">帮助</a>
+				<font>|</font>    
+        </div>
+	</div>       
 </div>
-
-<script src="/js/index.js"></script>
 
 <!--头部结束 !-->
