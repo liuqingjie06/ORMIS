@@ -5,7 +5,7 @@
 		mainheight();
 	</script-->
 <div class="web">
-	<s:include value="../top.jsp"></s:include>
+	<s:include value="../admintop.jsp"></s:include>
 	<div class="minweb">
 		<div class="txt">
 			<div class="land" style="position:static">

@@ -5,7 +5,7 @@
 		mainheight();
 	</script-->
 <div class="web">
-<s:include value="../top.jsp"></s:include>
+<s:include value="../admintop.jsp"></s:include>
 <div class="minweb" style="min-height: 362px;">	
 <script type="text/javascript" src="../js/index.js"></script>
 <div class="main">

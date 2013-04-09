@@ -1,59 +1,100 @@
-/*
- * jQuery Select Plugins v1.3.6.2
- * Copyright (c) 2009 zhangjingwei
- * Dual licensed under the MIT and GPL licenses.
- * Date: 2009-11-17 09:37
- * Revision: 1.3.6.2
- * www.leadwit.com-���� modify in  2010-07-26 14:26
- */
-
 (function($){
 $.fn.extend({
 	sSelect: function() {
 		return this.each(function(i,obj){
-		var selectId = (this.name||this.id)+'__jQSelect'+i||'__jQSelect'+i;
+		var selectId = (this.id)+'__jQSelect'+i||'__jQSelect'+i;
+		var dropdown='dropdown_'+(this.id);
 		if(obj.style.display != 'none' && $(this).parents()[0].id.indexOf('__jQSelect')<0){
 		var tabindex = this.tabIndex||0;
-		$(this).before("<div class='dropdown' id="+selectId+" tabIndex="+tabindex+"></div>").prependTo($("#"+selectId));
-		var selectZindex = $(this).css('z-index'),selectIndex = $('#'+selectId+' option').index($('#'+selectId+' option:selected')[0]);
-		$('#'+selectId).append('<div class="dropselectbox"><h4></h4><ul></ul></div>');
+		$(this).before("<div id="+dropdown+" class='selectlist margins'><div class='relative' id="+selectId+" tabIndex="+tabindex+"></div></div>").prependTo($("#"+selectId));
+		if(this.className=="" && this.title==""){
+			$('#'+selectId).append("<div class='dropselect'><h4></h4></div><ul id='dropselistbox'></ul>");
+		}else{
+		if(this.className==""){
+			if(this.title==""){
+				$('#'+selectId).append("<div class='dropselect'><div class='selectIcon'><font class='selectt' id='"+(this.id)+"_icon'></font><font class='selectb' id='"+(this.id)+"_icont'></font></div><h4></h4></div><ul id='dropselistbox'></ul>");
+			}else{
+				$('#'+selectId).append("<div class='dropselect'><div class='selectIcon'><font class='selectb' id='"+(this.id)+"_icont' style='margin-top:3px;'></font></div><h4></h4></div><ul id='dropselistbox'></ul>");			
+		};
+		}else{
+			$('#'+selectId).append("<div class='dropselect'><div class='selectIcon'><font class='selectt' id='"+(this.id)+"_icon'></font><font class='selectb' id='"+(this.id)+"_icont'></font></div><h4></h4></div><ul id='dropselistbox'></ul>");
+		};
+		}
+		var selectZindex = $(this).css('z-index'),selectIndex = $('#'+selectId+' option').index($('#'+selectId+' option:selected')[0]);	
 		$('#'+selectId+' h4').empty().append($('#'+selectId+' option:selected').text());
+		$('#'+selectId+' h4').attr('title',$('#'+selectId+' option:selected').text());
 		var selectWidth=$('#'+selectId+' select').width();
-		if($.browser.safari){selectWidth = selectWidth+15}
-		$('#'+selectId+' h4').css({width:selectWidth});
-		var selectUlwidth = selectWidth + parseInt($('#'+selectId+' h4').css("padding-left")) + parseInt($('#'+selectId+' h4').css("padding-right"));
-		$('#'+selectId+' ul').css({width:selectUlwidth+'px'});
+		var selectHeight=$('#'+selectId+' select').height();
+		var zindex=$('#'+selectId+' select').css("z-index");
+		if($.browser.safari){selectWidth = selectWidth+24};
+		var selecttxtwidth=parseFloat($('#'+selectId+' select').css("left")),//姝eft鐢ㄤ簬鎺у埗瀹藉害
+			selecttxtheight=parseFloat($('#'+selectId+' select').css("top"));//姝op鐢ㄤ簬鎺у埗楂樺害
+		//$('#'+selectId+' h4').css({width:selectWidth});閫夋嫨妗嗗唴瀹瑰搴�
+		//var selectUlwidth = selectWidth + parseInt($('#'+selectId+' h4').css("padding-left")) + parseInt($('#'+selectId+' h4').css("margin-right"));
+		//var selectulwidtht=selectUlwidth;
+		$('#'+dropdown).css({height:selectHeight+'px',float:"left"});
+		$('#'+selectId).css({'z-index':zindex});
+		if(selecttxtwidth>0){
+			$('#'+dropdown).css({width:selecttxtwidth});
+		}
+		if(selecttxtheight>0){
+			$('#'+selectId+' ul').css({"max-height":selecttxtheight});
+		}
+		var selectmaxwidth=$('#'+dropdown).width();
+		if(selectmaxwidth>=selectWidth){
+			//alert(selectmaxwidth+">"+selectWidth);
+			$('#'+selectId+' ul').css({width:selectmaxwidth+7+'px',display:'none'});
+		}else{
+			$('#'+selectId+' ul').css({width:selectWidth-2+'px',display:'none'});
+		}
 		$('#'+selectId+' select').hide();
 		$('#'+selectId+' div').hover(function(){
-			$('#'+selectId+' h4').addClass("over");
+			$('#'+selectId+' .dropselect').addClass("over");
 		},function(){
-			$('#'+selectId+' h4').removeClass("over");
+			$('#'+selectId+' .dropselect').removeClass("over");
 		});
 
 		var timeobj;
 		$('#'+selectId+' ul').bind("mouseover",function(e){
 			clearTimeout(timeobj);
 		});
+		
+		$("#"+(this.id)+"_icon").bind("mouseover",function(e){
+			$('#'+selectId+' .dropselect').addClass("over");
+		});
+		$("#"+(this.id)+"_icont").bind("mouseover",function(e){
+			$('#'+selectId+' .dropselect').addClass("over");
+		});
 		var click_fun =function(){
-				$('#'+selectId+' h4').addClass("current");
-				$('#'+selectId+' ul').show();
+				$('#'+selectId+' .dropselect').addClass("current");
+				$('#'+selectId+' ul').show();	
 				var selectZindex = $('#'+selectId).css('z-index');
-				if ($.browser.msie || $.browser.opera){$('.dropdown').css({'position':'relative','z-index':'0'});}
-				$('#'+selectId).css({'position':'relative','z-index':'999'});
+				if ($.browser.msie || $.browser.opera){$('.dropdown').css({'position':'relative'/*,'z-index':'99'*/});}
 				$.fn.setSelectValue(selectId);
 				selectIndex = $('#'+selectId+' li').index($('.selectedli')[0]);
 				var windowspace = ($(window).scrollTop() + document.documentElement.clientHeight) - $('#'+selectId).offset().top;
 				var ulspace = $('#'+selectId+' ul').outerHeight(true);
 				var windowspace2 = $('#'+selectId).offset().top - $(window).scrollTop() - ulspace;
 				windowspace < ulspace && windowspace2 > 0?$('#'+selectId+' ul').css({top:-ulspace}):$('#'+selectId+' ul').css({top:$('#'+selectId+' h4').outerHeight(true)});
-				$(window).scroll(function(){
+				/*$(window).scroll(function(){
 					windowspace = ($(window).scrollTop() + document.documentElement.clientHeight) - $('#'+selectId).offset().top;
 					windowspace < ulspace?$('#'+selectId+' ul').css({top:-ulspace}):$('#'+selectId+' ul').css({top:$('#'+selectId+' h4').outerHeight(true)});
-				});	
+				});	*/
 				$('#'+selectId+' li').click(function(e){
 						selectIndex = $('#'+selectId+' li').index(this);
 						$.fn.keyDown(selectId,selectIndex);
 						$('#'+selectId+' h4').empty().append($('#'+selectId+' option:selected').text());
+						$('#'+selectId+' h4').attr('title',$('#'+selectId+' option:selected').text());
+						if($('#selectyy1__jQSelect0 h4').html()=='閫夋嫨搴旂敤'){ //杞寲浠〃閫夋嫨鍚庣殑鏍峰紡
+							$('#selectyy1__jQSelect0 h4').removeClass("h4style")
+						}else{
+							$('#selectyy1__jQSelect0 h4').addClass("h4style")
+						}
+						if($('#selectyy2__jQSelect0 h4').html()=='閫夋嫨搴旂敤'){ //杞寲浠〃閫夋嫨鍚庣殑鏍峰紡
+							$('#selectyy2__jQSelect0 h4').removeClass("h4style")
+						}else{
+							$('#selectyy2__jQSelect0 h4').addClass("h4style")
+						}
 						$.fn.clearSelectMenu(selectId,selectZindex);
 						e.stopPropagation();
 						e.cancelbubble = true;
@@ -63,13 +104,12 @@ $.fn.extend({
 							$('#'+selectId+' li').removeClass("over");
 							$(this).addClass("over").addClass("selectedli");
 							selectIndex = $('#'+selectId+' li').index(this);
-						},
-						function(){
-							$(this).removeClass("over");
-						}
+						}//,
+						//function(){
+							//$(this).removeClass("over");
+						//}
 				);
 		}
-
 		$('#'+selectId)
 		.bind("focus",function(){
 			//$.fn.clearSelectMenu(selectId,selectZindex);
@@ -84,6 +124,7 @@ $.fn.extend({
 			};
 			e.stopPropagation();
 		})
+		/*
 		.bind("mouseover",function(e){
 			if($('#'+selectId+' ul').css("display") == 'block'){
 				//$.fn.clearSelectMenu(selectId,selectZindex);
@@ -123,7 +164,7 @@ $.fn.extend({
 		.bind("dblclick", function(){
 			$.fn.clearSelectMenu(selectId,selectZindex);
 			return false;
-		})
+		})*/
 		.bind("keydown",function(e){
 			$(this).bind('keydown',function(e){
 				if (e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 35 || e.keyCode == 36){
@@ -189,32 +230,74 @@ $.fn.extend({
 		.bind("selectstart",function(){
 				return false;
 		});
+		/*涓婁笅鎸夐挳鍔熻兘
+		$("#"+(this.id)+"_icon").bind("click",function(e){
+					var $obj = $('#'+selectId+' li.over'),$slength = $('#'+selectId+' option').length;
+					e.preventDefault();
+					$obj.removeClass("over");
+					selectIndex == 0?selectIndex = 0:selectIndex--;
+					$.fn.keyDown(selectId,selectIndex);		
+		});
+		$("#"+(this.id)+"_icont").bind("click",function(e){
+					var $obj = $('#'+selectId+' li.over'),$slength = $('#'+selectId+' option').length;
+					e.preventDefault();
+					$obj.removeClass("over");
+					selectIndex == ($slength - 1)?selectIndex = $slength - 1:selectIndex ++;
+					$.fn.keyDown(selectId,selectIndex);
+					$('#'+selectId+' .dropselect').addClass("over");
+		})*/
 	}else if($(this).parents()[0].id.indexOf('__jQSelect')>0){
 		selectId = $(this).parents()[0].id;
 		$.fn.setSelectValue(selectId);
 		var selectWidth=$('#'+selectId+' select').width();
-		if($.browser.safari){selectWidth = selectWidth+15}
-		$('#'+selectId+' h4').css({width:selectWidth});
-		var selectUlwidth = selectWidth + parseInt($('#'+selectId+' h4').css("padding-left")) + parseInt($('#'+selectId+' h4').css("padding-right"));
-		$('#'+selectId+' ul').css({width:selectUlwidth+'px'});
+		if($.browser.safari){selectWidth = selectWidth+24}
+		var selecttxtwidth=parseFloat($('#'+selectId+' select').css("left"));//姝eft鐢ㄤ簬鎺у埗瀹藉害
+			selecttxtheight=parseFloat($('#'+selectId+' select').css("top"));//姝op鐢ㄤ簬鎺у埗楂樺害
+		//$('#'+selectId+' h4').css({width:selectWidth}); 閫夋嫨妗嗗唴瀹瑰搴�
+		//var selectUlwidth = selectWidth + parseInt($('#'+selectId+' h4').css("padding-left")) + parseInt($('#'+selectId+' h4').css("margin-right"));
+		if(selecttxtwidth>0){
+			$('#'+dropdown).css({width:selecttxtwidth});
+		}
+		if(selecttxtheight>0){
+			$('#'+selectId+' ul').css({"max-height":selecttxtheight});
+		}
+		var selectmaxwidth=$('#'+dropdown).width();
+		if(selectmaxwidth>selectWidth){
+			$('#'+selectId+' ul').css({width:selectmaxwidth-2+'px'});
+		}else{
+			$('#'+selectId+' ul').css({width:selectWidth-2+'px'});
+		}
+		//$('#'+selectId+' ul').css({width:selectWidth+'px'});
+		//$('#'+dropdown).css({width:selectUlwidth+'px'});
 		if(this.style.display != 'none'){$(this).hide();}
 	}})},
 	clearSelectMenu:function(selectId,selectZindex){
 		if(selectId != undefined){
 			selectZindex = selectZindex||'auto';
 			$('#'+selectId+' ul').empty().hide();
-			$('#'+selectId+' h4').removeClass("over").removeClass("current");
-			$('#'+selectId).css({'z-index':selectZindex});
+			$('#'+selectId+' .dropselect').removeClass("over").removeClass("current");
+			/*$('#'+selectId).css({'z-index':selectZindex});*/
 		}
 	},
 	setSelectValue:function(sID){
 		var content = [];
 		$.each($('#'+sID+' option'), function(i){
-			content.push("<li class='FixSelectBrowser'>"+$(this).text()+"</li>");
+			content.push("<li class='FixSelectBrowser' id='"+(sID)+i+"' title='"+$(this).text()+"'>"+$(this).text()+"</li>");
 		});
 		content = content.join('');
 		$('#'+sID+' ul').html(content);
 		$('#'+sID+' h4').html($('#'+sID+' option:selected').text());
+		$('#'+sID+' h4').attr('title',$('#'+sID+' option:selected').text());
+		if($('#selectyy1__jQSelect0 h4').html()=='閫夋嫨搴旂敤'){ //杞寲浠〃閫夋嫨鍚庣殑鏍峰紡
+			$('#selectyy1__jQSelect0 h4').removeClass("h4style")
+		}else{
+			$('#selectyy1__jQSelect0 h4').addClass("h4style")
+		}
+		if($('#selectyy2__jQSelect0 h4').html()=='閫夋嫨搴旂敤'){ //杞寲浠〃閫夋嫨鍚庣殑鏍峰紡
+			$('#selectyy2__jQSelect0 h4').removeClass("h4style")
+		}else{
+			$('#selectyy2__jQSelect0 h4').addClass("h4style")
+		}
 		$('#'+sID+' li').eq($('#'+sID+' select')[0].selectedIndex).addClass("over").addClass("selectedli");
 	},
 	keyDown:function(sID,selectIndex){
@@ -223,6 +306,17 @@ $.fn.extend({
 		$obj.change();
 		$('#'+sID+' li:eq('+selectIndex+')').toggleClass("over");
 		$('#'+sID+' h4').html($('#'+sID+' option:selected').text());
+		$('#'+sID+' h4').attr('title',$('#'+sID+' option:selected').text());
+		if($('#selectyy1__jQSelect0 h4').html()=='閫夋嫨搴旂敤'){ //杞寲浠〃閫夋嫨鍚庣殑鏍峰紡
+			$('#selectyy1__jQSelect0 h4').removeClass("h4style")
+		}else{
+			$('#selectyy1__jQSelect0 h4').addClass("h4style")
+		}
+		if($('#selectyy2__jQSelect0 h4').html()=='閫夋嫨搴旂敤'){ //杞寲浠〃閫夋嫨鍚庣殑鏍峰紡
+			$('#selectyy2__jQSelect0 h4').removeClass("h4style")
+		}else{
+			$('#selectyy2__jQSelect0 h4').addClass("h4style")
+		}
 	}
 });
 var types = ['DOMMouseScroll', 'mousewheel'];
