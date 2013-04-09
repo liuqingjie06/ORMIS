@@ -61,16 +61,18 @@ function login() {
 			password : vpassword,
 			timcc : vtimecc
 		};
-		$.post(url, params, callback);
+		//$.post(url, params, callback);
+		var form=document.getElementById('loginId');
+		form.submit();
 	} else {
 		loadHide();
 		setDivInfo("lpwddiv", "请填写密码", 1);
 	}
 }
 
-function callback(data) {
-	//@TODO login.jsp通过ajax向doLogin action发送数据，并在这里返回一个数据。1 0 -1
-	
+//TODO login.jsp通过ajax向doLogin action发送数据，并在这里返回一个数据。1 0 -1
+
+function callback(data) {	
 	loadHide();
 	input('lemail','emailmessage');
 	//input('lpassword','passwordmessage');

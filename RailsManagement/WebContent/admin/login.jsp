@@ -22,7 +22,7 @@
 			</div-->
 	     <!-- div class="divWhiteLine"></div-->
 	  </s:if>
-	  <s:form  action="LoginAction_doLogin" namespace="/" method="post">
+	  <s:form id="loginId" action="LoginAction_doLogin" namespace="/" method="post">
 		<ul>
 			 <li class="relative">
        	    <input id="lemail" class="inputtxthover" type="text" value="" onfocus="hide('emailmessage');" onblur="fun1();"/>
